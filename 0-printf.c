@@ -26,19 +26,6 @@ int print_str(char *str)
 	return (write(1, str, strlen(str)));
 }
 /**
- * print_int - Prints an integer to stdout
- * @num: The integer to print
- *
- * Return: The number of characters printed
- */
-int print_int(int num)
-{
-	char buf[32];
-	int len = sprintf(buf, "%d", num);
-
-	return (write(1, buf, len));
-}
-/**
  * _printf - Prints a formatted string to stdout
  * @format: The format string
  *
@@ -71,7 +58,7 @@ int _printf(const char *format, ...)
 			{
 				int num = va_arg(args, int);
 
-				len += print_int(num);
+				len = print_int(num, len);
 			}
 			else if (*format == '%')
 			{
