@@ -32,7 +32,13 @@ int _printf(const char *format, ...)
 			{
 				char *str = va_arg(args, char *);
 
-				len += write(1, str, strlen(str));
+				if (str == NULL)
+				{
+					str = "(null)";
+					len += write(1, str, strlen(str));
+				}
+				else
+					len += write(1, str, strlen(str));
 			}
 			else if (*format == '%')
 			{
