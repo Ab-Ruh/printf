@@ -30,7 +30,6 @@ len += write(1, &c, 1);
 else if (*format == 's')
 {
 char *str = va_arg(args, char *);
-{
 len += write(1, str, strlen(str));
 }
 else if (*format == '%')
