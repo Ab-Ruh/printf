@@ -4,9 +4,9 @@
 #include <stdio.h>
 
 int _printf(const char *format, ...);
-int print_int(int a, int b);
-int print_char(char c);
-int print_str(char *str);
+int print_int(int a, int len);
+int print_char(va_list args, int len);
+int print_str(va_list args, int len);
 int count_formats(char *input);
 
 #endif /* MAIN_H */
