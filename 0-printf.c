@@ -2,20 +2,19 @@
 #include <string.h>
 #include <stdarg.h>
 #include <unistd.h>
+#include <stdio.h>
 
 /**
-* _printf - Prints a formatted string to stdout
-* @format: The format string
-*
-* Return: The number of characters printed
-*/
+ * _printf - Prints a formatted string to stdout
+ * @format: The format string
+ *
+ * Return: The number of characters printed
+ */
 int _printf(const char *format, ...)
 {
 	int len = 0;
 	va_list args;
 
-	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
-		return (-1);
 	va_start(args, format);
 	while (*format)
 	{
@@ -24,21 +23,17 @@ int _printf(const char *format, ...)
 			format++;
 			if (*format == 'c')
 			{
-				char c = (char) va_arg(args, int);
-
-				len += write(1, &c, 1);
+				print_char(args, len);
 			}
 			else if (*format == 's')
 			{
-				char *str = va_arg(args, char *);
+				print_str(args, len);
+			}
+			else if (*format == 'd' || *format == 'i')
+			{
+				int num = va_arg(args, int);
 
-				if (str == NULL)
-				{
-					str = "(null)";
-					len += write(1, str, strlen(str));
-				}
-				else
-					len += write(1, str, strlen(str));
+				print_int(num, len);
 			}
 			else if (*format == '%')
 			{
@@ -52,6 +47,5 @@ int _printf(const char *format, ...)
 		format++;
 	}
 	va_end(args);
-
 	return (len);
 }
