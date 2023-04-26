@@ -19,7 +19,18 @@ int print_int(int a, int len)
 	{
 		write(1, "-", 1);
 		if (a == INT_MIN)
-			a = (-1 * a) - 1;
+		{
+			if (sizeof(int) == 4)
+			{
+				write(1, "2147483648", 10);
+				return (10);
+			}
+			else if (sizeof(int) == 8)
+			{
+				write(1, "9223372036854775808", 19);
+				return (19);
+			}
+		}
 		else
 			a = -1 * a;
 	}
