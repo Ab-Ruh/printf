@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <limits.h>
 
 /**
  * print_int - Prints integers
@@ -17,7 +18,10 @@ int print_int(int a, int len)
 	if (a < 0)
 	{
 		write(1, "-", 1);
-		a = -1 * a;
+		if (a == INT_MIN)
+			a = (-1 * a) - 1;
+		else
+			a = -1 * a;
 	}
 	if (a > 9)
 	{
