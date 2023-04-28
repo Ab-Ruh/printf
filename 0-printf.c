@@ -1,51 +1,48 @@
 #include "main.h"
+#include <string.h>
+#include <stdarg.h>
+#include <unistd.h>
 
 /**
-* _printf - produces output according to a format
-* @format: character string
+* _printf - Prints a formatted string to stdout
+* @format: The format string
 *
-* Return: number of characters printed
+* Return: The number of characters printed
 */
 int _printf(const char *format, ...)
 {
-va_list args;
 int len = 0;
+va_list args;
 
 va_start(args, format);
-
+if (format == NULL || (format[0] == '%' && format[1] == '\0'))
+return (-1);
 while (*format)
 {
 if (*format == '%')
 {
 format++;
-switch (*format)
+if (*format == 'c')
 {
-case 'c':
-putchar(va_arg(args, int));
-len++;
-break;
-case 's':
-len += _puts(va_arg(args, char *));
-break;
-case '%':
-putchar('%');
-len++;
-break;
-default:
-putchar('%');
-putchar(*format);
-len += 2;
-break;
+char c = (char) va_arg(args, int);
+len += write(1, &c, 1);
+}
+else if (*format == 's')
+{
+char *str = va_arg(args, char *);
+len += write(1, str, strlen(str));
+}
+else if (*format == '%')
+{
+len += write(1, "%", 1);
 }
 }
 else
 {
-putchar(*format);
-len++;
+len += write(1, format, 1);
 }
 format++;
 }
-
 va_end(args);
 
 return (len);
